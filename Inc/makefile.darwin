@@ -1,0 +1,13 @@
+# makefile for the mac
+# also works with non-apple build GNU compiler
+astar: astar.cpp
+	make astar_32
+	make astar_64
+	lipo -create -arch x86_64 $@_64 -arch i386 $@_32 -o $@
+astar_32: astar.cpp
+	$(CXX) -O2 -o $@ $^ -std=c++98 -pedantic -m32
+astar_64: astar.cpp
+	$(CXX) -O2 -o $@ $^ -std=c++98 -pedantic -m64
+clean :
+	rm -f astar_32
+	rm -f astar_64
